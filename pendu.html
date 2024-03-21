@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jeu du pendu</title>
+</head>
+<body>
+    <h1>Jeu du pendu</h1>
+    <p>Devinez le mot mystère en cliquant sur les lettres !</p>
+    <p id="wordToGuess"></p>
+    <div id="letters"></div>
+    <p id="message"></p>
+    <script>
+        // Initialisation des variables
+let wordState = [];
+let remainingLetters;
+let message = '';
+
+// Sélection des éléments du DOM
+const wordToGuessPara = document.getElementById('wordToGuess');
+const lettersDiv = document.getElementById('letters');
+const messagePara = document.getElementById('message');
+
+// Création des boutons pour chaque lettre de l'alphabet
+const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+for (let i = 0; i < alphabet.length; i++) {
+    const letterButton = document.createElement('button');
+    letterButton.textContent = alphabet[i];
+    lettersDiv.appendChild(letterButton);
+}
+
+fetch('./wordstoguess.json')
+    .then(response => response.json())
+    .then(data => {
+        const words = data.words;
+        const randomIndex = Math.floor(Math.random() * words.length);
+        const wordToGuess = words[randomIndex];
+        console.log(wordToGuess);
+
+        remainingLetters = wordToGuess.length;
+
+        // Création de l'état du mot à deviner
+        for (let i = 0; i < wordToGuess.length; i++) {
+            wordState.push('_');
+        }
+
+        // Fonction de mise à jour de l'affichage du mot à deviner
+        function updateWordToGuess() {
+            let displayString = '';
+            for (let i = 0; i < wordState.length; i++) {
+                displayString += wordState[i] + ' ';
+            }
+            wordToGuessPara.textContent = displayString;
+        }
+
+        // Appel initial de la fonction de mise à jour
+        updateWordToGuess();
+
+        // Fonction de vérification de la présence d'une lettre dans le mot à deviner
+        function checkLetter(letter) {
+            let foundLetter = false;
+            for (let i = 0; i < wordToGuess.length; i++) {
+                if (wordToGuess[i] === letter) {
+                    wordState[i] = letter;
+                    foundLetter = true;
+                    remainingLetters--;
+                }
+            }
+            return foundLetter;
+        }
+
+        // Ajout d'un écouteur d'événements à chaque bouton
+        const letterButtons = lettersDiv.getElementsByTagName('button');
+        for (let i = 0; i < letterButtons.length; i++) {
+            letterButtons[i].addEventListener('click', function(e) {
+                const clickedLetter = e.target;
+                clickedLetter.disabled = true;
+                const letter = clickedLetter.textContent;
+                const letterFound = checkLetter(letter);
+                if (letterFound) {
+                    message = 'Bravo ! La lettre ' + letter + ' est présente dans le mot.';
+                } else {
+                    message = 'Dommage ! La lettre ' + letter + ' n\'est pas dans le mot.';
+                }
+                messagePara.textContent = message;
+                updateWordToGuess();
+            });
+        }
+    });
+
+        </script>
+</body>
+</html>

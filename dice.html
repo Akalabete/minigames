@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>générateur de nombre aléatoire</title>
+</head>
+<body>
+    <div class="dice">
+        <h1>Le dé a été lancé !</h1>
+        <p id="diceResult">Résultat : 0</p>
+        <button id="D4">1D4</button>
+        <button id="D6">1D6</button>
+        <button id="D8">1D8</button>
+        <button id="D10">1D10</button>
+        <button id="D12">1D12</button>
+        <button id="D20">1D20</button>
+        <button id="D100">1D100</button>
+    </div>
+    <script>
+        // Sélection des éléments du DOM
+        const diceResult = document.getElementById('diceResult');
+        const D4 = document.getElementById('D4');
+        const D6 = document.getElementById('D6');
+        const D8 = document.getElementById('D8');
+        const D10 = document.getElementById('D10');
+        const D12 = document.getElementById('D12');
+        const D20 = document.getElementById('D20');
+        const D100 = document.getElementById('D100');
+
+        // Fonction de lancer de dé
+        function rollDice(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Ajout d'un écouteur d'événements à chaque bouton
+        D4.addEventListener('click', function() {
+            diceResult.textContent = 'Résultat : ' + rollDice(1, 4);
+        });
+
+        D6.addEventListener('click', function() {
+            diceResult.textContent = 'Résultat : ' + rollDice(1, 6);
+        });
+
+        D8.addEventListener('click', function() {
+            diceResult.textContent = 'Résultat : ' + rollDice(1, 8);
+        });
+
+        D10.addEventListener('click', function() {
+            diceResult.textContent = 'Résultat : ' + rollDice(1, 10);
+        });
+
+        D12.addEventListener('click', function() {
+            diceResult.textContent = 'Résultat : ' + rollDice(1, 12);
+        });
+
+        D20.addEventListener('click', function() {
+            diceResult.textContent = 'Résultat : ' + rollDice(1, 20);
+        });
+
+        D100.addEventListener('click', function() {
+            diceResult.textContent = 'Résultat : ' + rollDice(1, 100);
+        });
+    </script>
+</body>
+</html>

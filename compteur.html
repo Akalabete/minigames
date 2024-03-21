@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="compteur.css">
+    <title>Compteur de clics</title>
+</head>
+<body>
+    <button id="clickButton">Cliquez ici</button>
+    <p id="clickCount">Nombre de clics : 0</p>
+
+    <script>
+        // Initialisation de la variable de comptage
+        let count = 0;
+
+        // Sélection du bouton et du paragraphe dans le DOM
+        const button = document.getElementById('clickButton');
+        const countDisplay = document.getElementById('clickCount');
+
+        // Ajout d'un écouteur d'événements au bouton
+        button.addEventListener('click', function() {
+            // Incrémentation du compteur
+            count++;
+
+            // Mise à jour de l'affichage du compteur
+            countDisplay.textContent = 'Nombre de clics : ' + count;
+        });
+    </script>
+</body>
+</html>
